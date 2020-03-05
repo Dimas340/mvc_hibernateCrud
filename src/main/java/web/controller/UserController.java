@@ -21,10 +21,6 @@ public class UserController {
     //@RequestParam -- извлекает значения из строки запроса
     //@PathVariables извлекает значения из пути URI
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String start(Model model) {
-        return "index";
-    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String getUsers(ModelMap model) {
@@ -34,8 +30,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/edit/*", method = RequestMethod.POST)
-    public String editPage(@RequestParam long id, @RequestParam String name, @RequestParam String surname) {
-        User users = new User(id, name, surname);
+    public String editPage(@RequestParam long id, @RequestParam String name, @RequestParam String password) {
+        User users = new User(id, name, password);
         service.editUser(users);
         return "redirect:/users";
     }
@@ -54,8 +50,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addUser(@RequestParam String name, @RequestParam String surname) {
-        User users = new User(name, surname);
+    public String addUser(@RequestParam String name, @RequestParam String password) {
+        User users = new User(name, password);
         service.addUser(users);
         return "redirect:/users";
     }

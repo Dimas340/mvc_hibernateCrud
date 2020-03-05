@@ -10,8 +10,8 @@
     <form action="${var}" method="POST">
         <label for="name">Name</label>
         <input type="text" name="name" id="name"><br>
-        <label for="surname">Surname</label>
-        <input type="text" name="surname" id="surname"><br>
+        <label for="password">Password</label>
+        <input type="text" name="password" id="password"><br>
         <input type="submit" value="Add user">
     </form>
 </div>

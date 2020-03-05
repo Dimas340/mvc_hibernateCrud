@@ -15,13 +15,13 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>Surname</th>
+            <th>Password</th>
         </tr>
         <c:forEach items="${get}" var="user">
             <tr>
                 <td>${user.id}</td>
                 <td>${user.name}</td>
-                <td>${user.surname}</td>
+                <td>${user.password}</td>
                 <td>
                     <%--<a href="/edit/${user.id}">Edit</a>--%>
                     <%--&nbsp;&nbsp;&nbsp;&nbsp;--%>

@@ -1,8 +1,5 @@
 package web.model;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,8 +13,8 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "surname")
-    private String surname;
+    @Column(name = "password")
+    private String password;
 
     @ManyToOne
     @JoinColumn(name = "roles_id")
@@ -25,21 +22,21 @@ public class User {
 
     public User() {}
 
-    public User(long id, String name, String surname) {
+    public User(long id, String name, String password) {
         this.id = id;
         this.name = name;
-        this.surname = surname;
+        this.password = password;
     }
 
-    public User(String name, String surname, Role role) {
+    public User(String name, String password, Role role) {
         this.name = name;
-        this.surname = surname;
+        this.password = password;
         this.role = role;
     }
 
-    public User(String name, String surname) {
+    public User(String name, String password) {
         this.name = name;
-        this.surname = surname;
+        this.password = password;
     }
 
     public long getId() {
@@ -58,11 +55,19 @@ public class User {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
