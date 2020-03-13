@@ -7,6 +7,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import web.model.Role;
 import web.model.User;
+import web.service.MyUserDetailsService;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -29,6 +31,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
     private Environment environment;
+
 
     @Bean
     public DataSource getDatasource() {
@@ -78,6 +81,11 @@ public class WebConfig implements WebMvcConfigurer {
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
         return resolver;
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return new MyUserDetailsService();
     }
 
 }

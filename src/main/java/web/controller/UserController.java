@@ -65,6 +65,11 @@ public class UserController {
         return "redirect:/users";
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage() {
+        return "login";
+    }
+
     @PostConstruct
     public void init() {
         service.init();
