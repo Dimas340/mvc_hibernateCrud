@@ -26,7 +26,6 @@ public class User implements UserDetails{
     private Set <Role> roles;
 
     public User(String name, String password) {
-
         this.name = name;
         this.password = password;
     }

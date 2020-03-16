@@ -1,6 +1,7 @@
 package web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import web.dao.Dao;
 import web.model.User;
@@ -17,6 +18,7 @@ public class ServiceImpl implements web.service.Service {
     private final User user3 = new User("John", "Nazarov");
 
     @Autowired
+    @Qualifier("Dao")
     private Dao dao;
 
     @Override
