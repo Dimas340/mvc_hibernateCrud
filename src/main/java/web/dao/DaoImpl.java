@@ -34,6 +34,14 @@ public class  DaoImpl implements Dao {
        return list;
     }
 
+    @Override
+    public User findByUsername(String name) {
+        Query query = (Query) entityManager.createNativeQuery("SELECT u FROM User v WHERE v.name = :name");
+        query.setParameter("name", name);
+        User user = (User) query.uniqueResult();
+        return user;
+    }
+
 //    @Override
 //    public void addUser(User user) {
 //        sessionFactory.getCurrentSession().save(user);

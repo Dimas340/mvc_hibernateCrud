@@ -2,6 +2,7 @@ package web.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -27,11 +28,11 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties.properties")
 @EnableTransactionManagement
 @ComponentScan("web")
+//@Order(1)
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
     private Environment environment;
-
 
     @Bean
     public DataSource getDatasource() {
@@ -48,6 +49,7 @@ public class WebConfig implements WebMvcConfigurer {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setDataSource(getDatasource());
         Properties properties = new Properties();
+        properties.put("dialect", environment.getProperty("dialect"));
         properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
         properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         sessionFactoryBean.setHibernateProperties(properties);
@@ -87,5 +89,4 @@ public class WebConfig implements WebMvcConfigurer {
     public UserDetailsService userDetailsService() {
         return new MyUserDetailsService();
     }
-
 }

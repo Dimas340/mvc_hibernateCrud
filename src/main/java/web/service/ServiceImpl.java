@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import web.dao.Dao;
 import web.model.User;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -18,12 +17,16 @@ public class ServiceImpl implements web.service.Service {
     private final User user3 = new User("John", "Nazarov");
 
     @Autowired
-    @Qualifier("Dao")
     private Dao dao;
 
     @Override
     public List<User> getAllUser() {
         return dao.getAllUser();
+    }
+
+    @Override
+    public User findByUsername(String name) {
+        return dao.findByUsername(name);
     }
 
     @Transactional
