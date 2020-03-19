@@ -6,7 +6,7 @@
 </head>
 <body>
 <div align="center">
-    <c:url value="/users/edit/{id}" var="var"/>
+    <c:url value="/admin/edit/{id}" var="var"/>
     <form action="${var}" method="POST">
         <input type="hidden" name="id" value="${user.id}">
         <label for="name">Name</label>

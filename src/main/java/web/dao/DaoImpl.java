@@ -36,7 +36,7 @@ public class  DaoImpl implements Dao {
 
     @Override
     public User findByUsername(String name) {
-        Query query = (Query) entityManager.createNativeQuery("SELECT u FROM User v WHERE v.name = :name");
+        Query query = (Query) entityManager.createNativeQuery("SELECT u FROM User u WHERE u.name = :name");
         query.setParameter("name", name);
         User user = (User) query.uniqueResult();
         return user;
@@ -71,7 +71,6 @@ public class  DaoImpl implements Dao {
     public void editUser(User user) {
         entityManager.merge(user);
     }
-
 
 //    @Override
 ////    public User getById(long id) {

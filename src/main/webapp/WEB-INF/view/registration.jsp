@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form method="post" action="/login">
+<form method="post" action="/registration">
     <input name="j_username"/>
     <input name="j_password"/>
     <input type="submit"/>

@@ -6,7 +6,7 @@
 </head>
 <body>
 <div align="center">
-    <c:url value="/users/add" var="var"/>
+    <c:url value="/admin/add" var="var"/>
     <form action="${var}" method="POST">
         <label for="name">Name</label>
         <input type="text" name="name" id="name"><br>
