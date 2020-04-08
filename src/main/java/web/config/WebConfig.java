@@ -2,10 +2,8 @@ package web.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,7 +26,7 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties.properties")
 @EnableTransactionManagement
 @ComponentScan("web")
-//@Order(1)
+//@Order(1) порядок выполнения
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -88,5 +86,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public UserDetailsService userDetailsService() {
         return new MyUserDetailsService();
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/info").setViewName("user");
     }
 }

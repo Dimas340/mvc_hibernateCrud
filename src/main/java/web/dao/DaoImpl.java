@@ -4,6 +4,7 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import web.model.Role;
 import web.model.User;
 
 import javax.persistence.EntityManager;
@@ -36,11 +37,12 @@ public class  DaoImpl implements Dao {
 
     @Override
     public User findByUsername(String name) {
-        Query query = (Query) entityManager.createNativeQuery("SELECT u FROM User u WHERE u.name = :name");
+        TypedQuery <User> query =  entityManager.createQuery("FROM User u WHERE u.name = :name", User.class);
         query.setParameter("name", name);
-        User user = (User) query.uniqueResult();
+        User user = query.getSingleResult();
         return user;
     }
+
 
 //    @Override
 //    public void addUser(User user) {
@@ -49,7 +51,12 @@ public class  DaoImpl implements Dao {
 
     @Override
     public void addUser(User user) {// work
-        entityManager.persist(user);
+         entityManager.persist(user);
+    }
+
+    @Override
+    public void addRoles(Role role) {// work
+         entityManager.persist(role);
     }
 
 //    @Override
@@ -80,7 +87,7 @@ public class  DaoImpl implements Dao {
 
     @Override
     public User getById(long id) {//work
-        User user =  entityManager.find(User.class, id);
+         User user =  entityManager.find(User.class, id);
         return user;
     }
 }

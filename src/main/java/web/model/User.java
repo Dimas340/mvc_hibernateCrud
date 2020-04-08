@@ -21,14 +21,20 @@ public class User implements UserDetails{
     @Column(name = "password")
     private String password;
 
-    @Column
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "role_id"))
+    //связь таблиц JoinColumn - владеющая сторона (создает связующею таблицу)
     private Set <Role> roles;
 
     public User(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public User(String name, String password, Role role) {
+        this.name = name;
+        this.password = password;
+
     }
 
      public User(Long id, String name, String password) {
