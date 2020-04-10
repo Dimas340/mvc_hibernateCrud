@@ -16,12 +16,14 @@
             <th>Id</th>
             <th>Name</th>
             <th>Password</th>
+            <th>Role</th>
         </tr>
         <c:forEach items="${get}" var="user">
             <tr>
                 <td>${user.id}</td>
                 <td>${user.name}</td>
                 <td>${user.password}</td>
+                <td><c:forEach items="${user.roles}" var="role">  ${role.role}</c:forEach></td>
                 <td>
                     <%--<a href="/edit/${user.id}">Edit</a>--%>
                     <%--&nbsp;&nbsp;&nbsp;&nbsp;--%>
@@ -33,6 +35,11 @@
             </tr>
         </c:forEach>
     </table>
+    <br>
+    <br>
+    <form action="/logout" method="post">
+        <input type="submit" value="exit"/>
+    </form>
 </div>
 </body>
 </html>

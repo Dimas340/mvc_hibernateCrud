@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier(value = "MyUserDetailsService")
     private MyUserDetailsService userDetailsService;
-//sad
+
     @Bean("authenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    protected void configure(final HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf()
                 .disable()
@@ -69,12 +69,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 //Перенарпавление на главную страницу после успешного входа
-                .defaultSuccessUrl("/", true)
+                .successHandler(myAuthenticationSuccessHandler())
                 .permitAll()
                 .and()
                 .logout()
                 .permitAll()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/login");
     }
 
     @Bean

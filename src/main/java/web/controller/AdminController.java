@@ -5,14 +5,17 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import web.model.Role;
 import web.model.User;
 import web.service.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
-@RequestMapping("/")
+//@RequestMapping("/") из за этого были ошибки в add
 //@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
@@ -27,10 +30,14 @@ public class AdminController {
     }
 
     @PostMapping("/admin/edit/*")
-    public String editPage(@RequestParam long id, @RequestParam String name, @RequestParam String password) {
-        User users = new User(id, name, password);
+    public String editPage(@RequestParam String name, @RequestParam String password, @RequestParam String role) {
+        User users = new User(name, password);
+        Role roles = new Role(role);
+        Set<Role> set = new HashSet<>();
+        set.add(roles);
+        users.setRoles(set);
         service.editUser(users);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @GetMapping("/admin/edit")
@@ -47,10 +54,14 @@ public class AdminController {
     }
 
     @PostMapping("/admin/add")
-    public String addUser(@RequestParam String name, @RequestParam String password) {
+    public String addUser(@RequestParam String name, @RequestParam String password, @RequestParam String role) {
         User users = new User(name, password);
+        Role roles = new Role(role);
+        Set<Role> set = new HashSet<>();
+        set.add(roles);
+        users.setRoles(set);
         service.addUser(users);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @GetMapping("/admin/delete/*")
@@ -59,7 +70,7 @@ public class AdminController {
         if (users != null) {
             service.deleteUser(users);
         }
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @GetMapping("/admin/login")

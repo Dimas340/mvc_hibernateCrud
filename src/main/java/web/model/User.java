@@ -21,10 +21,13 @@ public class User implements UserDetails{
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "role_id"))
     //связь таблиц JoinColumn - владеющая сторона (создает связующею таблицу)
     private Set <Role> roles;
+
+    @Transient
+    private String role;
 
     public User(String name, String password) {
         this.name = name;
@@ -51,6 +54,21 @@ public class User implements UserDetails{
         this.roles = roles;
     }
 
+    public User(String name, String password, String role) {
+        this.name = name;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User(User user, Role role) {}
+
+    public User(long id, String name, String password, String role) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.role = role;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -74,6 +92,8 @@ public class User implements UserDetails{
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getRole() { return role; }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

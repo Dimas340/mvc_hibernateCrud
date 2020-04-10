@@ -12,6 +12,8 @@
         <input type="text" name="name" id="name"><br>
         <label for="password">Password</label>
         <input type="text" name="password" id="password"><br>
+        <label for="role">Role</label>
+        <input type="text" name="role" id="role"><br>
         <input type="submit" value="Add user">
     </form>
 </div>

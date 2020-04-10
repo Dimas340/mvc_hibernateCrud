@@ -7,6 +7,7 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
 
+@Component
 public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
@@ -42,19 +44,20 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         Collection<? extends GrantedAuthority> authorities
                 = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
-            if (grantedAuthority.getAuthority().equals("ROLE__USER")) {
+            String str = grantedAuthority.getAuthority();
+            if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
                 isUser = true;
                 break;
-            } else if (grantedAuthority.getAuthority().equals("ROLE__ADMIN")) {
+            } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
                 isAdmin = true;
                 break;
             }
         }
 
         if (isUser) {
-            return "/user.jsp";//??
+            return "/user";//??
         } else if (isAdmin) {
-            return "/get.jsp";
+            return "/admin";
         } else {
             System.out.println("HTTP Status 404 – Not Found!!!");
             throw new IllegalStateException();
