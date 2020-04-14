@@ -11,7 +11,6 @@ import web.model.User;
 import web.service.Service;
 
 @Controller
-//@RequestMapping("/")
 //@PreAuthorize("hasAuthority('USER')")
 public class UserController {
 

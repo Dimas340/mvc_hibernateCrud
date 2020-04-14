@@ -10,9 +10,9 @@ public interface Service {
 
     List<User> getAllUser();
     User findByUsername(String name);
-    void addUser(User user);
+    void addUser(User user, String role);
     void deleteUser(User user);
-    void editUser(User user);
+    void editUser(User user, String role);
     User getById(long id);
     void init();
 }

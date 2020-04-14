@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Set;
 
 @Controller
-//@RequestMapping("/") из за этого были ошибки в add
 //@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
@@ -30,19 +29,13 @@ public class AdminController {
     }
 
     @PostMapping("/admin/edit/*")
-    public String editPage(@RequestParam String name, @RequestParam String password, @RequestParam String role) {
-        User users = new User(name, password);
-        Role roles = new Role(role);
-        Set<Role> set = new HashSet<>();
-        set.add(roles);
-        users.setRoles(set);
-        service.editUser(users);
+    public String editPage(@ModelAttribute("user") User user, @RequestParam String role) {
+        service.editUser(user, role);
         return "redirect:/admin";
     }
 
     @GetMapping("/admin/edit")
     public String editUser(@ModelAttribute("user") User user, ModelMap model) {
-        //@ModelAttribute мы получаем этот атрибут и можем его изменить
         User user1 = service.getById(user.getId());
         model.addAttribute("user", user1);
         return "edit";
@@ -56,11 +49,7 @@ public class AdminController {
     @PostMapping("/admin/add")
     public String addUser(@RequestParam String name, @RequestParam String password, @RequestParam String role) {
         User users = new User(name, password);
-        Role roles = new Role(role);
-        Set<Role> set = new HashSet<>();
-        set.add(roles);
-        users.setRoles(set);
-        service.addUser(users);
+        service.addUser(users, role);
         return "redirect:/admin";
     }
 

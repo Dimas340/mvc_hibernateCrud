@@ -25,7 +25,7 @@ import web.service.MyUserDetailsService;
 
 @Configuration
 @EnableWebSecurity//???
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 //@Order(2)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 

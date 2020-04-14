@@ -21,32 +21,21 @@ public class User implements UserDetails{
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     //связь таблиц JoinColumn - владеющая сторона (создает связующею таблицу)
     private Set <Role> roles;
 
     @Transient
     private String role;
 
+    public User() {}
+
     public User(String name, String password) {
         this.name = name;
         this.password = password;
     }
-
-    public User(String name, String password, Role role) {
-        this.name = name;
-        this.password = password;
-
-    }
-
-     public User(Long id, String name, String password) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-    }
-
-    public User() {}
 
     public User(String name, String password, Set<Role> roles) {
         this.name = name;
@@ -55,15 +44,6 @@ public class User implements UserDetails{
     }
 
     public User(String name, String password, String role) {
-        this.name = name;
-        this.password = password;
-        this.role = role;
-    }
-
-    public User(User user, Role role) {}
-
-    public User(long id, String name, String password, String role) {
-        this.id = id;
         this.name = name;
         this.password = password;
         this.role = role;

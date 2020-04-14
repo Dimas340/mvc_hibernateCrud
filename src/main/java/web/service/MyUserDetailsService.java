@@ -24,13 +24,6 @@ public class MyUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(name);
         }
-//        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-//        authorities.add(new SimpleGrantedAuthority(user.getRoles().));
-//        User userDetails = new User(user.getName(), user.getPassword(), authorities);
-//
-//
-//
-//        return userDetails;
         return user;
     }
 }

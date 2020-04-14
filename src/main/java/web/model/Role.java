@@ -16,7 +16,7 @@ public class Role implements GrantedAuthority{
 
     private String role;
 
-    @ManyToMany(mappedBy = "roles")// зачем она сдесь ведь владеющая сторона указана в user??
+    @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
     public Role() {}

@@ -45,11 +45,11 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
                 = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
             String str = grantedAuthority.getAuthority();
-            if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
-                isUser = true;
-                break;
-            } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+            if (grantedAuthority.getAuthority().equals("ROLE_ADMIN") | authorities.size() == 2) {
                 isAdmin = true;
+                break;
+            } else if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
+                isUser = true;
                 break;
             }
         }

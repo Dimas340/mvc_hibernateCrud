@@ -9,6 +9,7 @@ import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class  DaoImpl implements Dao {
 //    @Autowired
 //    private SessionFactory sessionFactory;
 
-    @PersistenceContext
+    @PersistenceContext(type = PersistenceContextType.TRANSACTION)
     private EntityManager entityManager;
 
 //    @Override
@@ -76,6 +77,7 @@ public class  DaoImpl implements Dao {
 
     @Override
     public void editUser(User user) {
+//        entityManager.clear();
         entityManager.merge(user);
     }
 

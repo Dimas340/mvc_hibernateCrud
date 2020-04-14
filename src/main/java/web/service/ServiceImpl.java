@@ -14,6 +14,7 @@ public class ServiceImpl implements web.service.Service {
 
     private final Role role_1 = new Role("ROLE_ADMIN");
     private final Role role_2 = new Role("ROLE_USER");
+    private final Role role_3 = new Role("ROLE_USER ROLE_ADMIN");
     private final User user = new User("1", "1");
     private final User user2 = new User("2", "2");
     private final User user3 = new User("3", "3");
@@ -33,8 +34,10 @@ public class ServiceImpl implements web.service.Service {
 
     @Transactional
     @Override
-    public void addUser(User user) {
-        dao.addUser(user);
+    public void addUser(User user, String role) {
+        Set<Role> set = new HashSet<>();
+        User user1 = intermediate(user, role, set);
+        dao.addUser(user1);
     }
 
     @Transactional
@@ -45,8 +48,27 @@ public class ServiceImpl implements web.service.Service {
 
     @Transactional
     @Override
-    public void editUser(User user) {
-            dao.editUser(user);
+    public void editUser(User user, String role) {
+        Set<Role> set = new HashSet<>();
+        User user1 = intermediate(user, role, set);
+        dao.editUser(user1);
+    }
+
+    private User intermediate(User user, String role, Set<Role> set) {
+        if (role_3.getRole().equals(role)) {
+            set.add(role_1);
+            set.add(role_2);
+            user.setRoles(set);
+        }
+        if (role_1.getRole().equals(role)) {
+            set.add(role_1);
+            user.setRoles(set);
+        }
+        if (role_2.getRole().equals(role)) {
+            set.add(role_2);
+            user.setRoles(set);
+        }
+        return user;
     }
 
     @Transactional
@@ -59,14 +81,8 @@ public class ServiceImpl implements web.service.Service {
     public void init() {
         dao.addRoles(role_1);
         dao.addRoles(role_2);
-        Set<Role> set = new HashSet<>();
-        set.add(role_1);
-        set.add(role_2);
-        user.setRoles(set);
-        user2.setRoles(Collections.singleton(role_2));
-        user3.setRoles(Collections.singleton(role_2));
-        addUser(user);
-        addUser(user2);
-        addUser(user3);
+        addUser(user, role_3.getRole());
+        addUser(user2, role_2.getRole());
+        addUser(user3, role_2.getRole());
     }
 }
