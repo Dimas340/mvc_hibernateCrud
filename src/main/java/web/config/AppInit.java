@@ -8,7 +8,6 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     protected Class<?>[] getRootConfigClasses() {
         return new Class<?>[]{
                 WebConfig.class
-//                SecurityConfig.class
         };
     }
 
@@ -16,7 +15,6 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     protected Class<?>[] getServletConfigClasses() {
         return new Class<?>[]{
                 WebConfig.class
-//                SecurityConfig.class
         };
     }
     //регистрация класса конфигурации

@@ -7,10 +7,7 @@
 <body>
 <div align="center">
     <h1>All users</h1>
-    <h2><a href="/admin/add/addUser">Add New User</a></h2><br>
-    <%--<h2>Add</h2>--%>
-    <%--<c:url value="/add" var="add"/>--%>
-    <%--<a href="${add}">Add new film</a>--%>
+    <h2><a href="/admin/add">Add New User</a></h2><br>
     <table border="5" cellpadding="10">
         <tr>
             <th>Id</th>
@@ -25,9 +22,6 @@
                 <td>${user.password}</td>
                 <td><c:forEach items="${user.roles}" var="role">  ${role.role}</c:forEach></td>
                 <td>
-                    <%--<a href="/edit/${user.id}">Edit</a>--%>
-                    <%--&nbsp;&nbsp;&nbsp;&nbsp;--%>
-                    <%--<a href="/delete/${user.id}">Delete</a>--%>
                         <a href="${pageContext.servletContext.contextPath}/admin/edit?id=${user.id}">Edit</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="${pageContext.servletContext.contextPath}/admin/delete/{id}?id=${user.id}">Delete</a>

@@ -10,6 +10,8 @@ import web.model.User;
 import web.service.Service;
 
 import javax.annotation.PostConstruct;
+import javax.swing.*;
+import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +22,8 @@ public class AdminController {
 
     @Autowired
     private Service service;
+
+    private JFrame jFrame;
 
     @GetMapping("/admin")
     public String getUsers(ModelMap model) {
@@ -41,30 +45,25 @@ public class AdminController {
         return "edit";
     }
 
-    @GetMapping(value = "/admin/add/addUser")
+    @GetMapping(value = "/admin/add")
     public String addPage() {
         return "add";
     }
 
     @PostMapping("/admin/add")
-    public String addUser(@RequestParam String name, @RequestParam String password, @RequestParam String role) {
-        User users = new User(name, password);
-        service.addUser(users, role);
+    public String addUser(@ModelAttribute("user") User user, @RequestParam String role) {//пару строк убрал
+//        User users = new User(name, password);
+        service.addUser(user, role);
         return "redirect:/admin";
     }
 
     @GetMapping("/admin/delete/*")
-    public String deleteUser(@ModelAttribute("user") User user) {
+    public String deleteUser(@ModelAttribute("user") User user) {// id
         User users = service.getById(user.getId());
         if (users != null) {
             service.deleteUser(users);
         }
         return "redirect:/admin";
-    }
-
-    @GetMapping("/admin/login")
-    public String loginPage() {
-        return "registration";
     }
 
     @PostConstruct

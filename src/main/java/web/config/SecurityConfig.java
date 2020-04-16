@@ -29,19 +29,14 @@ import web.service.MyUserDetailsService;
 //@Order(2)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final MySimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler;
+    private final MyUserDetailsService userDetailsService;
+
     @Autowired
-    @Qualifier(value = "MyUserDetailsService")
-    private MyUserDetailsService userDetailsService;
-
-    @Bean("authenticationManager")
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
-        return new MySimpleUrlAuthenticationSuccessHandler();
+    public SecurityConfig(@Qualifier(value = "MyUserDetailsService") MyUserDetailsService userDetailsService,
+                          MySimpleUrlAuthenticationSuccessHandler authenticationSuccessHandler) {
+        this.userDetailsService = userDetailsService;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
     }
 
     @Override
@@ -59,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration").not().fullyAuthenticated()
                 //Доступ только для пользователей с ролью Администратор
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user").hasRole("USER")
+                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
                 //Доступ разрешен всем пользователей
                 .antMatchers("/", "/resources/**").permitAll()
                 //Все остальные страницы требуют аутентификации
@@ -69,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 //Перенарпавление на главную страницу после успешного входа
-                .successHandler(myAuthenticationSuccessHandler())
+                .successHandler(authenticationSuccessHandler)
                 .permitAll()
                 .and()
                 .logout()
@@ -82,11 +77,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return NoOpPasswordEncoder.getInstance();
     }
 
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider(){
-//        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-//        auth.setUserDetailsService(userDetailsService);
-//        auth.setPasswordEncoder(passwordEncoder());
-//        return auth;
-//    }
 }

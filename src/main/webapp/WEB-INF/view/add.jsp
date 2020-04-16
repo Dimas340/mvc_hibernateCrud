@@ -6,14 +6,19 @@
 </head>
 <body>
 <div align="center">
-    <c:url value="/admin/add" var="var"/>
-    <form action="${var}" method="POST">
+    <c:url value="/admin/add" var="add"/>
+    <form action="${add}" method="POST">
         <label for="name">Name</label>
         <input type="text" name="name" id="name"><br>
         <label for="password">Password</label>
         <input type="text" name="password" id="password"><br>
-        <label for="role">Role</label>
-        <input type="text" name="role" id="role"><br>
+        <label>
+            <select name="role">
+                <option value="ROLE_ADMIN">Admin</option>
+                <option value="ROLE_USER">User</option>
+                <option value="ROLE_USER ROLE_ADMIN">Admin_User</option>
+            </select>
+        </label>
         <input type="submit" value="Add user">
     </form>
 </div>

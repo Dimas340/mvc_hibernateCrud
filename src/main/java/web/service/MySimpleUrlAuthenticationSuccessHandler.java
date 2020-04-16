@@ -3,6 +3,7 @@ package web.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Set;
 
 @Component
 public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -39,29 +41,30 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     }
 
     private String determineTargetUrl(Authentication authentication) {
-        boolean isUser = false;
-        boolean isAdmin = false;
-        Collection<? extends GrantedAuthority> authorities
-                = authentication.getAuthorities();
-        for (GrantedAuthority grantedAuthority : authorities) {
-            String str = grantedAuthority.getAuthority();
-            if (grantedAuthority.getAuthority().equals("ROLE_ADMIN") | authorities.size() == 2) {
-                isAdmin = true;
-                break;
-            } else if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
-                isUser = true;
-                break;
+//        boolean isUser = false;
+//        boolean isAdmin = false;
+//        Collection<? extends GrantedAuthority> authorities
+//                = authentication.getAuthorities();
+        Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
+//        for (GrantedAuthority grantedAuthority : authorities) {
+//            String str = grantedAuthority.getAuthority();
+            if (roles.contains("ROLE_ADMIN")) {// authorities.size() == 2 переделать
+//                isAdmin = true;
+//                break;
+                return "/admin";
+            } else  { // if
+//                isUser = true;
+                return "/user";
             }
-        }
 
-        if (isUser) {
-            return "/user";//??
-        } else if (isAdmin) {
-            return "/admin";
-        } else {
-            System.out.println("HTTP Status 404 – Not Found!!!");
-            throw new IllegalStateException();
-        }
+//        if (isUser) {
+//            return "/user";//??
+//        } else if (isAdmin) {
+//            return "/admin";
+//        } else {
+//            System.out.println("HTTP Status 404 – Not Found!!!");
+//            throw new IllegalStateException();
+//        }
     }
 
     private void clearAuthenticationAttributes(HttpServletRequest request) {
