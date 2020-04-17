@@ -31,6 +31,12 @@ public class  DaoImpl implements Dao {
 //    }
 
     @Override
+    public List<Role> getAllRole() {
+        List<Role> list = entityManager.createQuery("from Role").getResultList();
+        return list;
+    }
+
+    @Override
     public List<User> getAllUser() {// work
        List<User> list = entityManager.createQuery("from User").getResultList();
        return list;

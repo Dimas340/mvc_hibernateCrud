@@ -13,10 +13,10 @@
         <label for="password">Password</label>
         <input type="text" name="password" id="password"><br>
         <label>
-            <select name="role">
-                <option value="ROLE_ADMIN">Admin</option>
-                <option value="ROLE_USER">User</option>
-                <option value="ROLE_USER ROLE_ADMIN">Admin_User</option>
+            <select name="role" size="2" multiple="multiple">
+                <c:forEach var="roles" items="${roles}">
+                    <option><c:if test="${roles.role}">selected</c:if>${roles.role}</option>
+                </c:forEach>
             </select>
         </label>
         <input type="submit" value="Add user">
@@ -25,3 +25,10 @@
 </body>
 
 </html>
+<%--<label>--%>
+<%--<select name="role">--%>
+<%--<option value="ROLE_ADMIN">Admin</option>--%>
+<%--<option value="ROLE_USER">User</option>--%>
+<%--<option value="ROLE_USER ROLE_ADMIN">Admin_User</option>--%>
+<%--</select>--%>
+<%--</label>--%>

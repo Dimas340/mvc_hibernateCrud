@@ -8,6 +8,7 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public interface Service {
 
+    List<Role> getAllRole();
     List<User> getAllUser();
     User findByUsername(String name);
     void addUser(User user, String role);

@@ -23,8 +23,6 @@ public class AdminController {
     @Autowired
     private Service service;
 
-    private JFrame jFrame;
-
     @GetMapping("/admin")
     public String getUsers(ModelMap model) {
         List<User> users = service.getAllUser();
@@ -40,13 +38,17 @@ public class AdminController {
 
     @GetMapping("/admin/edit")
     public String editUser(@ModelAttribute("user") User user, ModelMap model) {
+        List<Role> roles = service.getAllRole();
         User user1 = service.getById(user.getId());
         model.addAttribute("user", user1);
+        model.addAttribute("roles", roles);
         return "edit";
     }
 
     @GetMapping(value = "/admin/add")
-    public String addPage() {
+    public String addPage(ModelMap model) {
+        List<Role> roles = service.getAllRole();
+        model.addAttribute("roles", roles);
         return "add";
     }
 
@@ -58,8 +60,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/delete/*")
-    public String deleteUser(@ModelAttribute("user") User user) {// id
-        User users = service.getById(user.getId());
+    public String deleteUser(@RequestParam Long id) {
+        User users = service.getById(id);
         if (users != null) {
             service.deleteUser(users);
         }

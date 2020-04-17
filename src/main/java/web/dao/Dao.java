@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface Dao {
 
+    List<Role> getAllRole();
     List<User> getAllUser();
     User findByUsername(String name);
     void addUser(User user);

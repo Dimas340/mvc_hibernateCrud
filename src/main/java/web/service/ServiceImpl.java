@@ -14,13 +14,18 @@ public class ServiceImpl implements web.service.Service {
 
     private final Role role_1 = new Role("ROLE_ADMIN");
     private final Role role_2 = new Role("ROLE_USER");
-    private final Role role_3 = new Role("ROLE_USER ROLE_ADMIN");
+    private final Role role_3 = new Role("ROLE_ADMIN,ROLE_USER");
     private final User user = new User("1", "1");
     private final User user2 = new User("2", "2");
     private final User user3 = new User("3", "3");
 
     @Autowired
     private Dao dao;
+
+    @Override
+    public List<Role> getAllRole() {
+        return dao.getAllRole();
+    }
 
     @Override
     public List<User> getAllUser() {

@@ -41,30 +41,12 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
     }
 
     private String determineTargetUrl(Authentication authentication) {
-//        boolean isUser = false;
-//        boolean isAdmin = false;
-//        Collection<? extends GrantedAuthority> authorities
-//                = authentication.getAuthorities();
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
-//        for (GrantedAuthority grantedAuthority : authorities) {
-//            String str = grantedAuthority.getAuthority();
             if (roles.contains("ROLE_ADMIN")) {// authorities.size() == 2 переделать
-//                isAdmin = true;
-//                break;
                 return "/admin";
             } else  { // if
-//                isUser = true;
                 return "/user";
             }
-
-//        if (isUser) {
-//            return "/user";//??
-//        } else if (isAdmin) {
-//            return "/admin";
-//        } else {
-//            System.out.println("HTTP Status 404 – Not Found!!!");
-//            throw new IllegalStateException();
-//        }
     }
 
     private void clearAuthenticationAttributes(HttpServletRequest request) {
